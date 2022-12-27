@@ -8,7 +8,8 @@ passport.serializeUser((user, done) => {
   console.log('=== serialize ... called ===');
   console.log(user);
   console.log('============================');
-  done(null, user._id);
+  console.log(user);
+  done(null, user);
 });
 
 passport.deserializeUser((id, done) => {
@@ -49,22 +50,27 @@ passport.use('sign-up', new LocalStrategy(
 
 // Sign in and send them user data
 passport.use('sign-in', new LocalStrategy(
-  {
-    usernameField: 'handle',
-    passwordField: 'password',
-  },
   async (handle, password, done) => {
     try {
       // Check if a user exists
       const userExists = await User.findOne({ handle });
+
+      console.log(userExists);
+      // return done(null, userExists);
       if (!userExists) {
+        console.log('here');
         return done(null, false, { message: 'That user does not exist' });
       }
       // Check if the password matches
-      const match = bcrypt.compareSync(password, userExists.password);
+      // const match = bcrypt.compareSync(password, userExists.password);
+
+      // ur not hasing yet lol
+      const match = password === userExists.password;
+
       if (match) {
         return done(null, userExists);
       }
+
       return done(null, false, { message: 'Wrong password' });
     } catch (err) {
       return done(err, false, { message: 'Unable to sign in' });

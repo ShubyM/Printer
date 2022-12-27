@@ -4,17 +4,25 @@ const passport = require('../passportConfig');
 const userRouter = express.Router();
 const userController = require('../controllers/userController');
 
-userRouter.get(
-  '/sign-in',
-  passport.authenticate('sign-up', { session: false }),
-  (req, res) => {
-    res.send(req.user);
-  },
-);
+// userRouter.get(
+//   '/sign-in',
+//   passport.authenticate('sign-in', {
+//     session: true,
+//     successRedirect: 'localhost:3000',
+//   }),
+// );
+
+userRouter.post('/sign-in', passport.authenticate('sign-in', {
+  session: true,
+  // successRedirect: 'localhost:3000/',
+  passReqToCallback: true,
+}), (req, res) => {
+  res.send(req.user);
+});
 
 userRouter.post(
   '/sign-up',
-  passport.authenticate('sign-in', { session: false }),
+  passport.authenticate('sign-up', { session: false }),
   (req, res) => {
     res.send(req.user);
   },
