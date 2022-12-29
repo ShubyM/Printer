@@ -6,7 +6,6 @@ const User = require('./models/userModel');
 
 passport.serializeUser((user, done) => {
   console.log('=== serialize ... called ===');
-  console.log(user);
   console.log('============================');
   console.log(user);
   done(null, user);
@@ -55,10 +54,8 @@ passport.use('sign-in', new LocalStrategy(
       // Check if a user exists
       const userExists = await User.findOne({ handle });
 
-      console.log(userExists);
       // return done(null, userExists);
       if (!userExists) {
-        console.log('here');
         return done(null, false, { message: 'That user does not exist' });
       }
       // Check if the password matches

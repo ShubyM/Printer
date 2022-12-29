@@ -14,6 +14,7 @@ const userRouter = require('./routes/userRoute');
 const printRouter = require('./routes/printRoute');
 
 const app = express();
+app.use(passport.initialize());
 app.use(session({
   secret: 'testXD',
   store: new MongoStore({
@@ -29,7 +30,6 @@ app.use(cors({
 }));
 
 app.use(express.json());
-app.use(passport.initialize());
 app.use(passport.session());
 
 // Use imported API routes

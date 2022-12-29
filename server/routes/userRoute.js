@@ -17,12 +17,12 @@ userRouter.post('/sign-in', passport.authenticate('sign-in', {
   // successRedirect: 'localhost:3000/',
   passReqToCallback: true,
 }), (req, res) => {
-  res.send(req.user);
+  res.json(req.user);
 });
 
 userRouter.post(
   '/sign-up',
-  passport.authenticate('sign-up', { session: false }),
+  passport.authenticate('sign-up', { session: true }),
   (req, res) => {
     res.send(req.user);
   },

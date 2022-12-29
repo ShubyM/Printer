@@ -21,21 +21,13 @@ function SignIn() {
   };
 
   // Sign in the user
-  const signIn = async () => {
+  const signIn = async (event) => {
+    event.preventDefault();
     axios.post('http://localhost:4000/user/sign-in', {
       username: handle,
       password,
       withCredentials: true,
     }).then(navigateToHome);
-    // if (response.data) {
-    //   const userData = {
-    //     // eslint-disable-next-line no-underscore-dangle
-    //     id: response.data._id,
-    //     handle: response.data.handle,
-    //   };
-    // } else {
-    //   alert('Handle or password is incorrect');
-    // }
   };
 
   return (
